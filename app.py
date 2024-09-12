@@ -1,58 +1,28 @@
 from flask import Flask, render_template, redirect, url_for
 from flask_bootstrap import Bootstrap5
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Column, Integer, String, Float
-from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, FloatField
-from wtforms.validators import DataRequired
+from models import Movie
+from form import RatingForm, TitleForm
+from extensions import db
 import requests
 
-"""----------------------------INICIALIZACION FLASK----------------------------"""
+
+"""----------------------------APP CONFIG----------------------------"""
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///movies-collection.db"
 Bootstrap5(app)
 
-"""----------------------CREACION Y CONFIGURACION DE LA BASE DE DATOS----------------------------------"""
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///movies-collection.db"
+"""----------------------------INIT DATA BASE----------------------------"""
 
-db = SQLAlchemy(app)
-
-
-class Base(db.Model):
-    __abstract__ = True
-
-
-class Movie(Base):
-    id = Column(Integer, primary_key=True)
-    title = Column(String(250), unique=True, nullable=False)
-    year = Column(Integer, nullable=False)
-    description = Column(String(1000), nullable=False)
-    rating = Column(Float)
-    ranking = Column(Integer)
-    review = Column(String(1000))
-    img_url = Column(String(1000), nullable=False)
-
+db.init_app(app)
 
 with app.app_context():
     db.create_all()
 
-"""--------------------------CREACION Y CONFIGURACION DEL FORMULARIO-------------------------------"""
 
-
-class RatingForm(FlaskForm):
-    rating = FloatField(label='Your Rating Out of 10', validators=[DataRequired()])
-    review = StringField(label='Your Review', validators=[DataRequired()])
-    submit = SubmitField("Done")
-
-
-class TitleForm(FlaskForm):
-    title = StringField(label='Movie Title', validators=[DataRequired()])
-    submit = SubmitField('Add Movie')
-
-
-"""--------------------------------API CONFIGURACION----------------------------------------------"""
+"""--------------------------------API CONFIGURATION----------------------------------------------"""
 
 API_KEY = "94f41153697fc2dd06780bf4fe755830"
 API_ENDPOINT = "https://api.themoviedb.org/3/search/movie"
