@@ -11,40 +11,6 @@ This is a Flask-based web application that allows users to manage a collection o
 - **Rating and Reviews**: Rate and review each movie.
 - **Password Security**: Implemented password hashing for enhanced security.
 
-## Installation
-
-1. **Clone the repository**:
-    ```bash
-    git clone https://github.com/LGabas/My-Top-Ten-Movies.git
-    cd My-Top-Ten-Movies
-    ```
-
-2. **Create a virtual environment and activate it**:
-    ```bash
-    python -m venv venv
-    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-    ```
-
-3. **Install the required packages**:
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-4. **Set up the database**:
-    ```bash
-    python
-    >>> from main import db
-    >>> db.create_all()
-    >>> exit()
-    ```
-
-5. **Run the application**:
-    ```bash
-    flask run
-    ```
-
-6. **Access the application**:
-    Open your web browser and go to `http://127.0.0.1:5000/`.
 
 ## Usage
 
@@ -66,9 +32,6 @@ This is a Flask-based web application that allows users to manage a collection o
 
 The application uses The Movie Database (TMDb) API to fetch movie details. You will need to set up an API key and include it in the configuration.
 
-## License
-
-This project is licensed under the MIT License.
 
 ## Contributing
 
